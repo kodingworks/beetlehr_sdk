@@ -2,8 +2,6 @@
   <h1 align="center">The BeetleHR SDK Flutter</h1>
 </h1>
 
-[![flutter][]][web flutter]
-
 The BeetleHR SDK Flutter is a powerful software development kit that allows developers to integrate BeetleHR functionality into their Flutter applications. BeetleHR is a human resources management platform that provides various features related to employee management, such as attendance tracking, leave management, and employee performance evaluation. This documentation will guide you through the process of integrating and utilizing the BeetleHR SDK in your Flutter projects.
 
 ## Features
@@ -134,7 +132,3 @@ When you contribute code, the best thing to do is imitate the existing pattern B
 
 <!-- ## License
 Beetlehr is released under the [AGPL-3.0](./LICENSE) license. -->
-
-[![flutter][]][web flutter]
-
-[web flutter]: https://flutter.dev
