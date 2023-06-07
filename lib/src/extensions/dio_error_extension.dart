@@ -3,7 +3,7 @@ import 'package:beetlehr_sdk/src/models/models.dart';
 import 'package:dio/dio.dart';
 
 /// The `DioErrorExtension` extension provides a convenient method to convert `DioError` instances to `ServerException`.
-extension DioErrorExtension on DioError {
+extension DioErrorExtension on DioException {
   /// Converts the `DioError` instance to a `ServerException` instance.
   ///
   /// This method analyzes the type and status code of the `DioError` to determine the appropriate `ServerException` to return.
@@ -15,7 +15,7 @@ extension DioErrorExtension on DioError {
         ? ErrorMetaData.fromJson(response?.data['meta'] ?? {})
         : null;
     switch (type) {
-      case DioErrorType.badResponse:
+      case DioExceptionType.badResponse:
         switch (response?.statusCode) {
           case 401:
             return UnAuthenticationServerException(
@@ -45,18 +45,18 @@ extension DioErrorExtension on DioError {
             );
         }
 
-      case DioErrorType.connectionTimeout:
-      case DioErrorType.sendTimeout:
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
         return TimeOutServerException(
           message: meta?.error ?? 'Connection timeout',
           code: response?.statusCode,
         );
 
-      case DioErrorType.cancel:
-      case DioErrorType.badCertificate:
-      case DioErrorType.connectionError:
-      case DioErrorType.unknown:
+      case DioExceptionType.cancel:
+      case DioExceptionType.badCertificate:
+      case DioExceptionType.connectionError:
+      case DioExceptionType.unknown:
         return GeneralServerException(
           message: meta?.error ?? 'A Server Error Occurred',
           code: response?.statusCode,

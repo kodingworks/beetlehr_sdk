@@ -18,7 +18,7 @@ class AttendanceBeetleHR {
         queryParameters: {'date': date},
       );
       return AttendanceOverviewModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw e.toServerException();
     }
   }
@@ -32,7 +32,7 @@ class AttendanceBeetleHR {
     try {
       final response = await dio.post('/employee/attendance-image', data: body);
       return AttendanceImageResponseModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw e.toServerException();
     }
   }

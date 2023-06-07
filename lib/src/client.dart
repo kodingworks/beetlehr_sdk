@@ -45,7 +45,7 @@ class BeetleHRClient {
         'protocol': schema.toUrlSchema()
       });
       return CheckServerModel.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw e.toServerException();
     }
   }
@@ -69,7 +69,7 @@ class BeetleHRClient {
       saveToken(auth.token);
 
       return auth;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw e.toServerException();
     }
   }
@@ -88,7 +88,7 @@ class BeetleHRClient {
         return true;
       }
       return false;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw e.toServerException();
     }
   }
