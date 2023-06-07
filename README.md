@@ -110,7 +110,7 @@ void login() async {
 
 ## Error Handling
 
-| Exception                | Failure                               |
+| Name                     | Item                                  |
 | :--------------------    |:------------------------------------- |
 |  Exception               | ServerException                       |
 |                          | GeneralServerException                |
