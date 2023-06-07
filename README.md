@@ -27,18 +27,18 @@ Here are all the features available on our sdk, take advantage and make your dev
 - [x] upload attendence image
 - [x] get attendence logs
 - [x] check placement office
-- [x] get attendance detail
-- [x] check accept clock
-- [x] clock attendence
-- [x] get schedule
-- [x] check accept clock attendance
-- [x] get schedule log
-- [x] get clock button type
-- [x] sync attendance
-- [x] upload attendance image
-- [x] cancel attendance
-- [x] break time
-- [x] check breaktime setting
+- [ ] get attendance detail
+- [ ] check accept clock
+- [ ] clock attendence
+- [ ] get schedule
+- [ ] check accept clock attendance
+- [ ] get schedule log
+- [ ] get clock button type
+- [ ] sync attendance
+- [ ] upload attendance image
+- [ ] cancel attendance
+- [ ] break time
+- [ ] check breaktime setting
 
 </details>
 

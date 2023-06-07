@@ -40,6 +40,9 @@ class AttendanceBeetleHR {
     }
   }
 
+  /// Retrieves the attendance logs for a specific month and year.
+  ///
+  /// Returns an instance of [AttendanceLogResponseModel] representing the attendance logs.
   Future<AttendanceLogResponseModel> getAttendanceLogs(
     int month,
     int year, {
@@ -58,8 +61,12 @@ class AttendanceBeetleHR {
     }
   }
 
+  /// Checks the placement office for attendance.
+  ///
+  /// Returns an instance of [AttendanceCheckPlacementResponseModel] representing the check placement office response.
   Future<AttendanceCheckPlacementResponseModel> checkPlacementOffice(
-      AttendanceCheckPlacementRequestModel body) async {
+    AttendanceCheckPlacementRequestModel body,
+  ) async {
     try {
       final response = await dio.post(
         '/employee/attendance-check-location',
