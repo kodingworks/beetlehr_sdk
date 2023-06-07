@@ -16,14 +16,14 @@ Here are all the features available on our sdk, take advantage and make your dev
 
 </details>
 
-<details><summary>Authentication</summary>
+<details><summary>Authentication Employee</summary>
 
 - [x] login with email and password
 - [x] reset password with email
 
 </details>
 
-<details><summary>Attendance</summary>
+<details><summary>Attendance Employee</summary>
 
 - [x] get attendence overview
 - [x] upload attendence image
