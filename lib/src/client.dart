@@ -2,6 +2,7 @@ import 'package:beetlehr_sdk/src/extensions/dio_error_extension.dart';
 import 'package:beetlehr_sdk/src/shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 
+import 'features/features.dart';
 import 'helpers/helpers.dart';
 import 'models/models.dart';
 import 'scheme.dart';
@@ -91,4 +92,7 @@ class BeetleHRClient {
       throw e.toServerException();
     }
   }
+
+  /// ATTENDANCE
+  AttendanceBeetleHR get attendance => AttendanceBeetleHR(dio);
 }
