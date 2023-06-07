@@ -3,3 +3,8 @@ export 'attendance_overview_data_model.dart';
 export 'attendance_image_model.dart';
 export 'attendance_image_response_model.dart';
 export 'attendance_image_request_model.dart';
+export 'attendance_log_response_model.dart';
+export 'attendance_model.dart';
+export 'attendance_check_location_model.dart';
+export 'attendance_office_placement_model.dart';
+export 'attendance_check_placement_request_model.dart';

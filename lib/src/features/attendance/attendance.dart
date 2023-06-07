@@ -30,8 +30,42 @@ class AttendanceBeetleHR {
     AttendanceImageRequestModel body,
   ) async {
     try {
-      final response = await dio.post('/employee/attendance-image', data: body);
+      final response = await dio.post(
+        '/employee/attendance-image',
+        data: body.toJson(),
+      );
       return AttendanceImageResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  Future<AttendanceLogResponseModel> getAttendanceLogs(
+    int month,
+    int year, {
+    String? status,
+  }) async {
+    try {
+      final response =
+          await dio.get('/employee/attendance-log', queryParameters: {
+        'month': month,
+        'year': year,
+        'status': status ?? '',
+      });
+      return AttendanceLogResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  Future<AttendanceCheckPlacementResponseModel> checkPlacementOffice(
+      AttendanceCheckPlacementRequestModel body) async {
+    try {
+      final response = await dio.post(
+        '/employee/attendance-check-location',
+        data: body.toJson(),
+      );
+      return AttendanceCheckPlacementResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       throw e.toServerException();
     }
