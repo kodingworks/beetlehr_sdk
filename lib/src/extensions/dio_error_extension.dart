@@ -11,36 +11,36 @@ extension DioErrorExtension on DioError {
   ///
   /// Returns the corresponding `ServerException` instance based on the error type and status code.
   ServerException toServerException() {
-    final meta = response?.data is Map && response?.data['meta'] is Map
-        ? MetaData.fromJson(response?.data['meta'] ?? {})
+    final meta = response?.data != null
+        ? ErrorMetaData.fromJson(response?.data['meta'] ?? {})
         : null;
     switch (type) {
       case DioErrorType.badResponse:
         switch (response?.statusCode) {
           case 401:
             return UnAuthenticationServerException(
-              message: meta?.message ?? 'Unauthorized',
+              message: meta?.error ?? 'Unauthorized',
               code: response?.statusCode,
             );
           case 403:
             return UnAuthorizeServerException(
-              message: meta?.message ?? 'Forbidden',
+              message: meta?.error ?? 'Forbidden',
               code: response?.statusCode,
             );
           case 404:
             return NotFoundServerException(
-              message: meta?.message ?? 'Not found',
+              message: meta?.error ?? 'Not found',
               code: response?.statusCode,
             );
           case 500:
           case 502:
             return InternalServerException(
-              message: meta?.message ?? 'Internal server error',
+              message: meta?.error ?? 'Internal server error',
               code: response?.statusCode,
             );
           default:
             return GeneralServerException(
-              message: meta?.message ?? 'Internal server error',
+              message: meta?.error ?? 'Internal server error',
               code: response?.statusCode,
             );
         }
@@ -49,7 +49,7 @@ extension DioErrorExtension on DioError {
       case DioErrorType.sendTimeout:
       case DioErrorType.receiveTimeout:
         return TimeOutServerException(
-          message: meta?.message ?? 'Connection timeout',
+          message: meta?.error ?? 'Connection timeout',
           code: response?.statusCode,
         );
 
@@ -58,7 +58,7 @@ extension DioErrorExtension on DioError {
       case DioErrorType.connectionError:
       case DioErrorType.unknown:
         return GeneralServerException(
-          message: meta?.message ?? 'A Server Error Occurred',
+          message: meta?.error ?? 'A Server Error Occurred',
           code: response?.statusCode,
         );
     }
