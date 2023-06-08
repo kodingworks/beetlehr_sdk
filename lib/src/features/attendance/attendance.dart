@@ -61,18 +61,18 @@ class AttendanceBeetleHR {
     }
   }
 
-  /// Checks the placement office for attendance.
+  /// Checks the branch office for attendance.
   ///
-  /// Returns an instance of [AttendanceCheckPlacementResponseModel] representing the check placement office response.
-  Future<AttendanceCheckPlacementResponseModel> checkPlacementOffice(
-    AttendanceCheckPlacementRequestModel body,
+  /// Returns an instance of [AttendanceCheckBranchResponseModel] representing the check branch office response.
+  Future<AttendanceCheckBranchResponseModel> checkBranchOffice(
+    AttendanceCheckBranchRequestModel body,
   ) async {
     try {
       final response = await dio.post(
         '/employee/attendance-check-location',
         data: body.toJson(),
       );
-      return AttendanceCheckPlacementResponseModel.fromJson(response.data);
+      return AttendanceCheckBranchResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       throw e.toServerException();
     }

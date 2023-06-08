@@ -26,7 +26,7 @@ Here are all the features available on our sdk, take advantage and make your dev
 - [x] get attendence overview
 - [x] upload attendence image
 - [x] get attendence logs
-- [x] check placement office
+- [x] check branch office
 - [ ] get attendance detail
 - [ ] check accept clock
 - [ ] clock attendence
