@@ -26,7 +26,7 @@ Here are all the features available on our sdk, take advantage and make your dev
 - [x] get attendence overview
 - [x] upload attendence image
 - [x] get attendence logs
-- [x] check placement office
+- [x] check branch office
 - [x] get attendance detail
 - [x] check accept clock
 - [x] clock attendence
@@ -130,5 +130,5 @@ We are very glad if you want to contribute and join our community.
 Please take note when you make a pull request. You must be very clear when making a commit message. 
 When you contribute code, the best thing to do is imitate the existing pattern BeetleHR code.
 
-<!-- ## License
-Beetlehr is released under the [AGPL-3.0](./LICENSE) license. -->
+## License
+Beetlehr SDK is released under the [MIT](./LICENSE) license.

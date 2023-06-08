@@ -26,7 +26,7 @@ class AttendanceImageRequestModel extends Equatable {
         filename: image.path.split('/').last,
       ),
       'type': type.convertToString(),
-      'date': date,
+      'date': date.toIso8601String(),
       'status': workingFrom.convertToString(),
     });
   }
