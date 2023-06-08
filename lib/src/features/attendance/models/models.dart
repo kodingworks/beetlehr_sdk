@@ -8,3 +8,8 @@ export 'attendance_model.dart';
 export 'attendance_check_location_model.dart';
 export 'attendance_office_branch_model.dart';
 export 'attendance_check_branch_request_model.dart';
+export 'attendance_detail_model.dart';
+export 'attendance_detail_response_model.dart';
+export 'clock_accept_model.dart';
+export 'clock_accept_response_model.dart';
+export 'clock_body_model.dart';
