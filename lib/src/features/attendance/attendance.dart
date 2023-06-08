@@ -1,3 +1,4 @@
+import 'package:beetlehr_sdk/src/exceptions/exceptions.dart';
 import 'package:beetlehr_sdk/src/extensions/extensions.dart';
 import 'package:beetlehr_sdk/src/features/attendance/models/models.dart';
 import 'package:dio/dio.dart';
@@ -123,10 +124,12 @@ class AttendanceBeetleHR {
   /// The [body] parameter represents the request body containing the attendance data.
   /// Returns a [Future] that resolves to an [AttendanceResponseModel] containing the response for the attendance clocking.
   /// Throws a [ServerException] if an error occurs during the API request.
-  Future<AttendanceResponseModel> clockAttendance(
-      Map<String, dynamic> body) async {
+  Future<AttendanceResponseModel> clockAttendance(ClockBodyModel body) async {
     try {
-      final response = await dio.post('/employee/attendance-clock', data: body);
+      final response = await dio.post(
+        '/employee/attendance-clock',
+        data: body.toJson(),
+      );
       return AttendanceResponseModel.fromJson(response.data['data']);
     } on DioException catch (e) {
       throw e.toServerException();
@@ -144,6 +147,78 @@ class AttendanceBeetleHR {
         'date': date,
       });
       return ScheduleResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Checks and accepts clock attendance based on the provided [body].
+  ///
+  /// Returns a Future<bool> indicating whether the clock attendance was accepted or not.
+  /// Throws a DefaultApiException if the clock attendance was not accepted.
+  Future<bool> checkAcceptClockAttendance(
+      CheckAcceptClockBodyModel body) async {
+    try {
+      final response = await dio.post(
+        '/employee/attendance-check-clocked',
+        data: body,
+      );
+      if (response.data['data']['accepted'] != null &&
+          response.data['data']['accepted'] == true) {
+        return true;
+      } else {
+        throw DefaultApiException(message: response.data['data']['message']);
+      }
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Retrieves the schedule log for the given [startDate] and [endDate].
+  ///
+  /// Returns a Future<ScheduleResponseModel> containing the schedule log.
+  /// Throws a ServerException if an error occurs.
+  Future<ScheduleResponseModel> getScheduleLog(
+      String startDate, String endDate) async {
+    try {
+      final response = await dio.get(
+        '/employee/schedule',
+        queryParameters: {
+          'date': startDate,
+          'endDate': endDate,
+          'per_page': 31,
+        },
+      );
+      return ScheduleResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Retrieves the clock button type.
+  ///
+  /// Returns a Future<ClockButtonModel> containing the clock button type.
+  /// Throws a ServerException if an error occurs.
+  Future<ClockButtonModel> getClockButtonType() async {
+    try {
+      final response = await dio.post('/employee/check-button-clockin');
+      return ClockButtonModel.fromJson(response.data['data']);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Synchronizes the provided [data] of offline attendances.
+  ///
+  /// Returns a Future<bool> indicating whether the attendances were synchronized successfully or not.
+  /// Throws a ServerException if an error occurs.
+  Future<bool> syncAttendances(List<AttendanceOfflineEntity> data) async {
+    try {
+      final response = await dio.post(
+        '/employee/attendances/offline',
+        data: data.map((e) => e.toJson()).toList(),
+      );
+      return response.statusCode == 200;
     } on DioException catch (e) {
       throw e.toServerException();
     }

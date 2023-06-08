@@ -137,3 +137,21 @@ class InternalServerException extends ServerException {
   String toString() =>
       'InternalServerException(message: $message, code: $code)';
 }
+
+/// Handling error base from basic error from response API, for example
+/// Bad request,
+class DefaultApiException extends ServerException {
+  ///
+  const DefaultApiException({
+    required String message,
+    int? code,
+  }) : super(
+          code: code,
+          message: message,
+        );
+
+  @override
+  String toString() {
+    return 'DefaultApiException{message: $message, code: $code}';
+  }
+}
