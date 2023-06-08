@@ -117,4 +117,35 @@ class AttendanceBeetleHR {
       throw e.toServerException();
     }
   }
+
+  /// Clocks the attendance with the provided request [body].
+  ///
+  /// The [body] parameter represents the request body containing the attendance data.
+  /// Returns a [Future] that resolves to an [AttendanceResponseModel] containing the response for the attendance clocking.
+  /// Throws a [ServerException] if an error occurs during the API request.
+  Future<AttendanceResponseModel> clockAttendance(
+      Map<String, dynamic> body) async {
+    try {
+      final response = await dio.post('/employee/attendance-clock', data: body);
+      return AttendanceResponseModel.fromJson(response.data['data']);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Retrieves the schedule for the specified [date].
+  ///
+  /// The [date] parameter represents the date for which the schedule is requested.
+  /// Returns a [Future] that resolves to a [ScheduleResponseModel] containing the schedule data.
+  /// Throws a [ServerException] if an error occurs during the API request.
+  Future<ScheduleResponseModel> getSchedule(String date) async {
+    try {
+      final response = await dio.get('/employee/schedule', queryParameters: {
+        'date': date,
+      });
+      return ScheduleResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
 }
