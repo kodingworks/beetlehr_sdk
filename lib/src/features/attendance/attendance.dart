@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:beetlehr_sdk/src/exceptions/exceptions.dart';
 import 'package:beetlehr_sdk/src/extensions/extensions.dart';
 import 'package:beetlehr_sdk/src/features/attendance/models/models.dart';
@@ -161,7 +163,7 @@ class AttendanceBeetleHR {
     try {
       final response = await dio.post(
         '/employee/attendance-check-clocked',
-        data: body,
+        data: body.toJson(),
       );
       if (response.data['data']['accepted'] != null &&
           response.data['data']['accepted'] == true) {
@@ -219,6 +221,71 @@ class AttendanceBeetleHR {
         data: data.map((e) => e.toJson()).toList(),
       );
       return response.statusCode == 200;
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Uploads attendance images to the server.
+  ///
+  /// Takes a list of [files] as input and returns a [Future] that resolves
+  /// to an [UploadFilesResponseModel] representing the response from the server.
+  /// Throws a [ServerException] if an error occurs during the upload process.
+  Future<UploadFilesResponseModel> uploadAttendanceImages(
+      List<File> files) async {
+    try {
+      final response = await dio.post(
+        '/employee/offline/files',
+        data: files.toFormData(),
+      );
+
+      return UploadFilesResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Cancels the attendance.
+  ///
+  /// Returns a [Future] that resolves to a boolean value indicating
+  /// whether the attendance cancellation was successful or not.
+  /// Throws a [ServerException] if an error occurs during the cancellation process.
+  Future<bool> cancelAttendance() async {
+    try {
+      final response =
+          await dio.post('/employee/attendances/cancel-attendance');
+
+      return response.statusCode == 200;
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Initiates a break time for the employee.
+  ///
+  /// Takes a [body] of type [BreakTimeBodyModel] as input and returns
+  /// a [Future] that resolves to a [BreakTimeResponseModel] representing
+  /// the response from the server. Throws a [ServerException] if an error
+  /// occurs during the break time initiation process.
+  Future<BreakTimeResponseModel> breakTime(BreakTimeBodyModel body) async {
+    try {
+      final response =
+          await dio.post('/employee/attendance/break', data: body.toJson());
+      return BreakTimeResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Checks the break time setting for the employee.
+  ///
+  /// Returns a [Future] that resolves to a boolean value indicating
+  /// whether the break time page can be closed or not.
+  /// Throws a [ServerException] if an error occurs during the check process.
+  Future<bool> checkBreakTimeSetting() async {
+    try {
+      final response = await dio.get('/employee/attendance/break-setting');
+      return response.data['data']['is_can_close_page'] == true;
     } on DioException catch (e) {
       throw e.toServerException();
     }

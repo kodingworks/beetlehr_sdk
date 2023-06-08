@@ -7,6 +7,7 @@ enum AttendanceLogType {
   absent,
 }
 
+/// Converts a string [type] to the corresponding AttendanceLogType enum value.
 AttendanceLogType? attendanceLogTypeFromString(String type) {
   switch (type) {
     case 'present':
@@ -21,11 +22,13 @@ AttendanceLogType? attendanceLogTypeFromString(String type) {
       return AttendanceLogType.holiday;
     case 'absent':
       return AttendanceLogType.absent;
+    default:
+      return null;
   }
-  return null;
 }
 
 extension AttendanceLogTypeX on AttendanceLogType {
+  /// Converts the AttendanceLogType enum value to its corresponding string representation.
   String convertToString() {
     switch (this) {
       case AttendanceLogType.present:

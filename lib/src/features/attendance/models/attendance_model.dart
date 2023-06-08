@@ -35,7 +35,7 @@ class AttendanceModel extends Equatable {
         clockOutGmt: json["clock_out_gmt"],
         workHours: json["work_hours"],
         isForceClockOut: json["is_force_clock_out"],
-        type: attendanceTypefromString(json["type"]),
+        type: attendanceTypeFromString(json["type"]),
         status: attendanceLogTypeFromString(json["status"]),
       );
 

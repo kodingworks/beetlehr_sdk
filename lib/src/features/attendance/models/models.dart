@@ -19,3 +19,8 @@ export 'schedule_response_model.dart';
 export 'check_accept_clock_body_model.dart';
 export 'clock_button_model.dart';
 export 'attendance_offline_entity.dart';
+export 'breaktime_body_model.dart';
+export 'network_file_model.dart';
+export 'upload_files_response_model.dart';
+export 'breaktime_model.dart';
+export 'breaktime_response_model.dart';

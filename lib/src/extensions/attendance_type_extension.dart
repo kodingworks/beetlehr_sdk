@@ -3,7 +3,8 @@ enum AttendanceType {
   clockOut,
 }
 
-AttendanceType? attendanceTypefromString(String? type) {
+/// Converts a string [type] to the corresponding AttendanceType enum value.
+AttendanceType? attendanceTypeFromString(String? type) {
   switch (type) {
     case 'normal':
       return AttendanceType.normal;
@@ -15,6 +16,7 @@ AttendanceType? attendanceTypefromString(String? type) {
 }
 
 extension AttendanceTypeX on AttendanceType {
+  /// Converts the AttendanceType enum value to its corresponding string representation.
   String convertToString() {
     switch (this) {
       case AttendanceType.normal:
