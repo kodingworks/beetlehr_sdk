@@ -35,10 +35,10 @@ Here are all the features available on our sdk, take advantage and make your dev
 - [x] get schedule log
 - [x] get clock button type
 - [x] sync attendance
-- [ ] upload attendance image
-- [ ] cancel attendance
-- [ ] break time
-- [ ] check breaktime setting
+- [x] upload attendance image
+- [x] cancel attendance
+- [x] break time
+- [x] check breaktime setting
 
 </details>
 
@@ -130,5 +130,5 @@ We are very glad if you want to contribute and join our community.
 Please take note when you make a pull request. You must be very clear when making a commit message. 
 When you contribute code, the best thing to do is imitate the existing pattern BeetleHR code.
 
-<!-- ## License
-Beetlehr is released under the [AGPL-3.0](./LICENSE) license. -->
+## License
+Beetlehr SDK is released under the [MIT](./LICENSE) license.
