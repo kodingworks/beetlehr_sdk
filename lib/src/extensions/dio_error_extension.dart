@@ -1,9 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:beetlehr_sdk/src/exceptions/exceptions.dart';
 import 'package:beetlehr_sdk/src/models/models.dart';
 import 'package:dio/dio.dart';
 
 /// The `DioErrorExtension` extension provides a convenient method to convert `DioError` instances to `ServerException`.
-extension DioErrorExtension on DioException {
+extension DioErrorExtension on DioError {
   /// Converts the `DioError` instance to a `ServerException` instance.
   ///
   /// This method analyzes the type and status code of the `DioError` to determine the appropriate `ServerException` to return.
@@ -15,7 +17,7 @@ extension DioErrorExtension on DioException {
         ? ErrorMetaData.fromJson(response?.data['meta'] ?? {})
         : null;
     switch (type) {
-      case DioExceptionType.badResponse:
+      case DioErrorType.badResponse:
         switch (response?.statusCode) {
           case 401:
             return UnAuthenticationServerException(
@@ -45,18 +47,18 @@ extension DioErrorExtension on DioException {
             );
         }
 
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
+      case DioErrorType.connectionTimeout:
+      case DioErrorType.sendTimeout:
+      case DioErrorType.receiveTimeout:
         return TimeOutServerException(
           message: meta?.error ?? 'Connection timeout',
           code: response?.statusCode,
         );
 
-      case DioExceptionType.cancel:
-      case DioExceptionType.badCertificate:
-      case DioExceptionType.connectionError:
-      case DioExceptionType.unknown:
+      case DioErrorType.cancel:
+      case DioErrorType.badCertificate:
+      case DioErrorType.connectionError:
+      case DioErrorType.unknown:
         return GeneralServerException(
           message: meta?.error ?? 'A Server Error Occurred',
           code: response?.statusCode,
