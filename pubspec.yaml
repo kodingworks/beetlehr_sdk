@@ -1,6 +1,6 @@
 name: beetlehr_sdk
 description: A powerful software development kit that allows developers to integrate BeetleHR functionality into their Flutter applications.
-version: 1.0.0+1
+version: 1.0.0+2
 homepage: https://beetlehr.com/
 repository: https://github.com/kodingworks/beetlehr_sdk
 
@@ -14,7 +14,7 @@ dependencies:
   dio: ^5.1.2
   equatable: ^2.0.5
   device_info_plus: ^9.0.2
-  shared_preferences: ^2.1.1
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   lints: ^2.0.0

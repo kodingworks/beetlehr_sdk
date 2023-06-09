@@ -9,3 +9,7 @@
 - Fix DioException with DioError ignore.
 - Add remove token (logout), checkauth & custom token.
 - fix dart version to use flutterflow
+
+## 1.0.0+2
+
+- Fix shared_preferences version 2.0.15.
