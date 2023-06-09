@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:beetlehr_sdk/src/extensions/dio_error_extension.dart';
 import 'package:beetlehr_sdk/src/shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
@@ -13,22 +15,25 @@ class BeetleHRClient {
   late String baseUrl;
   late String language;
   late bool isLog;
+  String? token;
 
   /// Creates a new instance of the BeetleHRClient class.
   ///
   /// The [baseUrl] parameter specifies the base URL of the Beetle HR API.
   /// The [isLog] parameter (optional) indicates whether request/response logging is enabled (default is false).
   /// The [language] parameter (optional) specifies the language for localization (default is 'id').
+  /// The [token] parameter (optional) for setup token authentication for every request, default from local with key token
   BeetleHRClient(
     this.baseUrl, {
     this.isLog = false,
     this.language = 'id',
+    this.token,
   }) {
     dio = Dio(BaseOptions(baseUrl: baseUrl))
       ..interceptors.addAll(
         [
           LogInterceptor(requestBody: isLog, responseBody: isLog),
-          AuthHttpInterceptor(language: language),
+          AuthHttpInterceptor(language: language, token: token),
         ],
       );
   }
@@ -45,7 +50,7 @@ class BeetleHRClient {
         'protocol': schema.toUrlSchema()
       });
       return CheckServerModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -69,7 +74,7 @@ class BeetleHRClient {
       saveToken(auth.token);
 
       return auth;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -88,9 +93,24 @@ class BeetleHRClient {
         return true;
       }
       return false;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
+  }
+
+  /// check whether the token is available locally or not.
+  ///
+  /// it will check using shared preferences with key token.
+  /// if token is not empty return [true] else empty token return [false]
+  Future<bool> checkToken() async {
+    final result = isToken();
+    return result;
+  }
+
+  /// Logs out the user by removing the token from shared preferences.
+  Future<bool> logout() async {
+    final result = await removeToken();
+    return result;
   }
 
   /// ATTENDANCE

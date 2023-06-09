@@ -7,11 +7,15 @@ import 'package:dio/dio.dart';
 /// Error handling when error in interceptor about authentication
 class AuthHttpInterceptor extends InterceptorsWrapper {
   /// Repository to get data current token
+  final String? token;
+
+  /// Parameter to set language in header
   final String language;
 
   ///
   AuthHttpInterceptor({
     required this.language,
+    this.token,
   });
 
   @override
@@ -19,10 +23,10 @@ class AuthHttpInterceptor extends InterceptorsWrapper {
       RequestOptions options, RequestInterceptorHandler handler) async {
     final optionHeaders = <String, Object>{};
 
-    final token = await getToken();
+    final auth = token ?? await getToken();
 
     if (options.headers['unAuthorize'] != true) {
-      optionHeaders.putIfAbsent('Authorization', () => 'Bearer $token');
+      optionHeaders.putIfAbsent('Authorization', () => 'Bearer $auth');
     }
 
     late String? deviceId;
@@ -34,7 +38,7 @@ class AuthHttpInterceptor extends InterceptorsWrapper {
       deviceId = androidInfo.id;
     } else if (Platform.isIOS) {
       final iosInfo = await deviceInfo.iosInfo;
-      deviceId = iosInfo.identifierForVendor;
+      deviceId = iosInfo.utsname.version;
     }
 
     optionHeaders.putIfAbsent('user-device', () => deviceId!);

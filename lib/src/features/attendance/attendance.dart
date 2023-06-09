@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:beetlehr_sdk/src/exceptions/exceptions.dart';
@@ -23,7 +25,7 @@ class AttendanceBeetleHR {
         queryParameters: {'date': date},
       );
       return AttendanceOverviewModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -42,7 +44,7 @@ class AttendanceBeetleHR {
         data: body.toJson(),
       );
       return AttendanceImageResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -66,7 +68,7 @@ class AttendanceBeetleHR {
         'status': status ?? '',
       });
       return AttendanceLogResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -85,7 +87,7 @@ class AttendanceBeetleHR {
         data: body.toJson(),
       );
       return AttendanceCheckBranchResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -99,7 +101,7 @@ class AttendanceBeetleHR {
     try {
       final response = await dio.get('/employee/attendance-detail/$date');
       return AttendanceDetailResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -116,7 +118,7 @@ class AttendanceBeetleHR {
         data: body.toJsonNoFiles(),
       );
       return ClockAcceptResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -133,7 +135,7 @@ class AttendanceBeetleHR {
         data: body.toJson(),
       );
       return AttendanceResponseModel.fromJson(response.data['data']);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -149,7 +151,7 @@ class AttendanceBeetleHR {
         'date': date,
       });
       return ScheduleResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -171,7 +173,7 @@ class AttendanceBeetleHR {
       } else {
         throw DefaultApiException(message: response.data['data']['message']);
       }
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -192,7 +194,7 @@ class AttendanceBeetleHR {
         },
       );
       return ScheduleResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -205,7 +207,7 @@ class AttendanceBeetleHR {
     try {
       final response = await dio.post('/employee/check-button-clockin');
       return ClockButtonModel.fromJson(response.data['data']);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -221,7 +223,7 @@ class AttendanceBeetleHR {
         data: data.map((e) => e.toJson()).toList(),
       );
       return response.statusCode == 200;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -240,7 +242,7 @@ class AttendanceBeetleHR {
       );
 
       return UploadFilesResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -256,7 +258,7 @@ class AttendanceBeetleHR {
           await dio.post('/employee/attendances/cancel-attendance');
 
       return response.statusCode == 200;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -272,7 +274,7 @@ class AttendanceBeetleHR {
       final response =
           await dio.post('/employee/attendance/break', data: body.toJson());
       return BreakTimeResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
@@ -286,7 +288,7 @@ class AttendanceBeetleHR {
     try {
       final response = await dio.get('/employee/attendance/break-setting');
       return response.data['data']['is_can_close_page'] == true;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       throw e.toServerException();
     }
   }
