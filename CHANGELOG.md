@@ -13,3 +13,7 @@
 ## 1.0.0+2
 
 - Fix shared_preferences version 2.0.15.
+
+## 1.0.0+3
+
+- Fix environtment.
