@@ -80,18 +80,25 @@ class NoticeBeetleHR {
     }
   }
 
-  // Future<ApprovalRequestDetailResponseModel> getApprovalRequestDetail(
-  //     int id, String type) async {
-  //   try {
-  //     final response = await dio.get(
-  //       '/employee/approvals/$id',
-  //       queryParameters: {
-  //         'type': type,
-  //       },
-  //     );
-  //     return ApprovalRequestDetailResponseModel.fromJson(response.data);
-  //   } on DioError catch (e) {
-  //     throw await NetworkUtils.dioErrorToException(e);
-  //   }
-  // }
+  /// Retrieves the approval request detail.
+  ///
+  /// The [id] parameter represents the ID of the approval request.
+  /// The [type] parameter represents the type of the approval request.
+  ///
+  /// Returns a [Future] that resolves to an instance of [ApprovalRequestDetailResponseModel].
+  /// Throws a [ServerException] if an error occurs during the API call.
+  Future<ApprovalRequestDetailResponseModel> getApprovalRequestDetail(
+      int id, String type) async {
+    try {
+      final response = await dio.get(
+        '/employee/approvals/$id',
+        queryParameters: {
+          'type': type,
+        },
+      );
+      return ApprovalRequestDetailResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.toServerException();
+    }
+  }
 }
