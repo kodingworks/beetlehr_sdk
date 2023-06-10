@@ -18,7 +18,7 @@ class AttendanceBeetleHR {
   /// The [date] parameter represents the date for which the attendance overview is to be retrieved.
   /// Returns a [Future] that resolves to an [AttendanceOverviewModel] containing the attendance overview.
   /// Throws a [ServerException] if an error occurs during the API request.
-  Future<AttendanceOverviewModel> getAttendanceOverview(String date) async {
+  Future<AttendanceOverviewModel> getOverview(String date) async {
     try {
       final response = await dio.get(
         '/employee/attendance-overview',
@@ -35,7 +35,7 @@ class AttendanceBeetleHR {
   /// The [body] parameter represents the request body containing the attendance image data.
   /// Returns a [Future] that resolves to an [AttendanceImageResponseModel] containing the uploaded image response.
   /// Throws a [ServerException] if an error occurs during the API request.
-  Future<AttendanceImageResponseModel> uploadAttendanceImage(
+  Future<AttendanceImageResponseModel> uploadImage(
     AttendanceImageRequestModel body,
   ) async {
     try {
@@ -55,7 +55,7 @@ class AttendanceBeetleHR {
   /// The [status] parameter is optional and represents the status of the attendance logs.
   /// Returns a [Future] that resolves to an [AttendanceLogResponseModel] containing the attendance logs.
   /// Throws a [ServerException] if an error occurs during the API request.
-  Future<AttendanceLogResponseModel> getAttendanceLogs(
+  Future<AttendanceLogResponseModel> getLogs(
     int month,
     int year, {
     String? status,
@@ -97,7 +97,7 @@ class AttendanceBeetleHR {
   /// The [date] parameter represents the date for which the attendance details are to be retrieved.
   /// Returns a [Future] that resolves to an [AttendanceDetailResponseModel] containing the attendance details.
   /// Throws a [ServerException] if an error occurs during the API request.
-  Future<AttendanceDetailResponseModel> getAttendanceDetail(String date) async {
+  Future<AttendanceDetailResponseModel> getDetail(String date) async {
     try {
       final response = await dio.get('/employee/attendance-detail/$date');
       return AttendanceDetailResponseModel.fromJson(response.data);
@@ -111,7 +111,7 @@ class AttendanceBeetleHR {
   /// The [body] parameter represents the clocking in/out details.
   /// Returns a [Future] that resolves to a [ClockAcceptResponseModel] containing the acceptance status.
   /// Throws a [ServerException] if an error occurs during the API request.
-  Future<ClockAcceptResponseModel> checkAcceptClock(ClockBodyModel body) async {
+  Future<ClockAcceptResponseModel> checkBeforeClock(ClockBodyModel body) async {
     try {
       final response = await dio.post(
         '/employee/attendance-check-before-clock',
@@ -128,7 +128,7 @@ class AttendanceBeetleHR {
   /// The [body] parameter represents the request body containing the attendance data.
   /// Returns a [Future] that resolves to an [AttendanceResponseModel] containing the response for the attendance clocking.
   /// Throws a [ServerException] if an error occurs during the API request.
-  Future<AttendanceResponseModel> clockAttendance(ClockBodyModel body) async {
+  Future<AttendanceResponseModel> clock(ClockBodyModel body) async {
     try {
       final response = await dio.post(
         '/employee/attendance-clock',
@@ -160,8 +160,7 @@ class AttendanceBeetleHR {
   ///
   /// Returns a Future<bool> indicating whether the clock attendance was accepted or not.
   /// Throws a DefaultApiException if the clock attendance was not accepted.
-  Future<bool> checkAcceptClockAttendance(
-      CheckAcceptClockBodyModel body) async {
+  Future<bool> checkClock(CheckAcceptClockBodyModel body) async {
     try {
       final response = await dio.post(
         '/employee/attendance-check-clocked',
@@ -216,7 +215,7 @@ class AttendanceBeetleHR {
   ///
   /// Returns a Future<bool> indicating whether the attendances were synchronized successfully or not.
   /// Throws a ServerException if an error occurs.
-  Future<bool> syncAttendances(List<AttendanceOfflineEntity> data) async {
+  Future<bool> syncs(List<AttendanceOfflineEntity> data) async {
     try {
       final response = await dio.post(
         '/employee/attendances/offline',
@@ -252,7 +251,7 @@ class AttendanceBeetleHR {
   /// Returns a [Future] that resolves to a boolean value indicating
   /// whether the attendance cancellation was successful or not.
   /// Throws a [ServerException] if an error occurs during the cancellation process.
-  Future<bool> cancelAttendance() async {
+  Future<bool> cancel() async {
     try {
       final response =
           await dio.post('/employee/attendances/cancel-attendance');
