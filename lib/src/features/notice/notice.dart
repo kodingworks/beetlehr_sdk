@@ -101,4 +101,28 @@ class NoticeBeetleHR {
       throw e.toServerException();
     }
   }
+
+  /// Approves a request with the provided [body] and [id].
+  ///
+  /// The [body] represents the request body data for approving the request.
+  /// The [id] specifies the ID of the request to be approved.
+  ///
+  /// Returns a [Future] that resolves to an [ApproverRequestResponseModel]
+  /// representing the response data after approving the request.
+  ///
+  /// Throws a [ServerException] if there's an error during the request.
+  Future<ApproverRequestResponseModel> approveRequest(
+    ApproverRequestBodyModel body,
+    int id,
+  ) async {
+    try {
+      final response = await dio.put(
+        '/employee/approvals/$id/approve',
+        data: body.toJson(),
+      );
+      return ApproverRequestResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.toServerException();
+    }
+  }
 }
