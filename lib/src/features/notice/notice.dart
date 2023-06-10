@@ -37,4 +37,61 @@ class NoticeBeetleHR {
       throw e.toServerException();
     }
   }
+
+  /// Retrieves all approval requests based on the specified parameters.
+  ///
+  /// The [perPage] parameter specifies the number of approval requests to retrieve per page.
+  /// The [page] parameter specifies the page number of the approval requests to retrieve.
+  /// The [sortBy] parameter specifies the sorting order for the approval requests.
+  /// The [requestType] parameter specifies the type of approval requests to retrieve.
+  /// The [startTime] parameter specifies the start time of the approval requests to retrieve.
+  /// The [endTime] parameter specifies the end time of the approval requests to retrieve.
+  /// The [employee] parameter specifies the employee associated with the approval requests to retrieve.
+  /// The [status] parameter specifies the status of the approval requests to retrieve.
+  /// Returns a [Future] that resolves to an instance of [ApprovalRequestResponseModel] representing the retrieved approval requests.
+  /// Throws a [ServerException] if an error occurs during the API request.
+  Future<ApprovalRequestResponseModel> getAllApprovalRequest({
+    required int perPage,
+    required int page,
+    required String sortBy,
+    required String? requestType,
+    required String? startTime,
+    required String? endTime,
+    required String? employee,
+    required ApprovalRequestType? status,
+  }) async {
+    try {
+      final response = await dio.get(
+        '/employee/approvals',
+        queryParameters: {
+          'per_page': perPage,
+          'page': page,
+          'order_by': sortBy,
+          'request_type': requestType,
+          'start_time': startTime,
+          'end_time': endTime,
+          'employees': employee,
+          'status': status?.convertToString(),
+        },
+      );
+      return ApprovalRequestResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  // Future<ApprovalRequestDetailResponseModel> getApprovalRequestDetail(
+  //     int id, String type) async {
+  //   try {
+  //     final response = await dio.get(
+  //       '/employee/approvals/$id',
+  //       queryParameters: {
+  //         'type': type,
+  //       },
+  //     );
+  //     return ApprovalRequestDetailResponseModel.fromJson(response.data);
+  //   } on DioError catch (e) {
+  //     throw await NetworkUtils.dioErrorToException(e);
+  //   }
+  // }
 }
