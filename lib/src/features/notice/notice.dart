@@ -111,16 +111,92 @@ class NoticeBeetleHR {
   /// representing the response data after approving the request.
   ///
   /// Throws a [ServerException] if there's an error during the request.
-  Future<ApproverRequestResponseModel> approveRequest(
-    ApproverRequestBodyModel body,
-    int id,
-  ) async {
+  Future<ApproverRequestResponseModel> approveRequest({
+    required ApproverRequestBodyModel body,
+    required int id,
+  }) async {
     try {
       final response = await dio.put(
         '/employee/approvals/$id/approve',
         data: body.toJson(),
       );
       return ApproverRequestResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Rejects a request and returns the response as an [ApproverRequestResponseModel].
+  ///
+  /// The [body] parameter represents the request body containing information related to the rejection.
+  /// The [id] parameter is the ID of the request to be rejected.
+  /// Returns a [Future] that completes with an [ApproverRequestResponseModel] when the request is rejected.
+  /// Throws a [ServerException] if an error occurs during the API call.
+  Future<ApproverRequestResponseModel> rejectRequest({
+    required ApproverRequestBodyModel body,
+    required int id,
+  }) async {
+    try {
+      final response = await dio.put(
+        '/employee/approvals/$id/reject',
+        data: body.toJson(),
+      );
+      return ApproverRequestResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Retrieves notification data and returns the response as a [NotificationResponseModel].
+  ///
+  /// Returns a [Future] that completes with a [NotificationResponseModel] containing the notification data.
+  /// Throws a [ServerException] if an error occurs during the API call.
+  Future<NotificationResponseModel> getNotification() async {
+    try {
+      final response =
+          await dio.get('/employee/approval-request/verify/reject');
+      return NotificationResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Retrieves the details of a notification based on its [id].
+  ///
+  /// The [id] parameter is the ID of the notification to fetch the details for.
+  /// Returns a [Future] that completes with a [NotificationDetailResponseModel] containing the notification details.
+  /// Throws a [ServerException] if an error occurs during the API call.
+  Future<NotificationDetailResponseModel> getNotificationDetail(int id) async {
+    try {
+      final response = await dio.get('/employee/approvals/$id');
+      return NotificationDetailResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.toServerException();
+    }
+  }
+
+  /// Retrieves employee data based on name filtering parameters.
+  ///
+  /// The [perPage] parameter represents the number of results per page.
+  /// The [page] parameter represents the page number.
+  /// The [name] parameter is the name used to filter employee data.
+  /// Returns a [Future] that completes with an [EmployeeNameFilterResponseModel] containing the filtered employee data.
+  /// Throws a [ServerException] if an error occurs during the API call.
+  Future<EmployeeNameFilterResponseModel> getEmployeeNameFilter({
+    required int perPage,
+    required int page,
+    required String name,
+  }) async {
+    try {
+      final response = await dio.get(
+        '/employee/filter',
+        queryParameters: {
+          'per_page': perPage,
+          'page': page,
+          'employee_name': name
+        },
+      );
+      return EmployeeNameFilterResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       throw e.toServerException();
     }
