@@ -113,6 +113,12 @@ class BeetleHRClient {
     return result;
   }
 
-  /// ATTENDANCE
+  /// Feature Attendance
   AttendanceBeetleHR get attendance => AttendanceBeetleHR(dio);
+
+  /// Feature Notice
+  NoticeBeetleHR get notice => NoticeBeetleHR(dio);
+
+  /// Feature Profile
+  ProfileBeetleHR get profile => ProfileBeetleHR(dio);
 }

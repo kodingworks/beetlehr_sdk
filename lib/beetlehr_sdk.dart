@@ -8,3 +8,4 @@ export 'src/extensions/extensions.dart';
 export 'src/helpers/helpers.dart';
 export 'src/features/attendance/models/models.dart';
 export 'src/features/notice/models/models.dart';
+export 'src/features/profile/models/models.dart';
