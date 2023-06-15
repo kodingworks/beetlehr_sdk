@@ -121,4 +121,7 @@ class BeetleHRClient {
 
   /// Feature Profile
   ProfileBeetleHR get profile => ProfileBeetleHR(dio);
+
+  /// Feature Payroll
+  PayrollBeetlerHR get payroll => PayrollBeetlerHR(dio);
 }
