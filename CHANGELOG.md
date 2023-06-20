@@ -17,3 +17,9 @@
 ## 1.0.0+3
 
 - Fix environtment.
+
+## 1.0.1
+
+- feature employe notice & payroll
+- feature profile
+- token custom initialization

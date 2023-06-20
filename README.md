@@ -21,6 +21,13 @@ Here are all the features available on our sdk, take advantage and make your dev
 
 </details>
 
+<details><summary>Profile Employee</summary>
+
+- [x] get profile employee
+- [x] update profile
+
+</details>
+
 <details><summary>Attendance Employee</summary>
 
 - [x] get attendence overview
@@ -39,6 +46,28 @@ Here are all the features available on our sdk, take advantage and make your dev
 - [x] cancel attendance
 - [x] break time
 - [x] check breaktime setting
+
+</details>
+
+<details><summary>Notice Employee</summary>
+
+- [x] Retrieves the notice board data
+- [x] Retrieves all approval requests based on the specified parameters
+- [x] Retrieves the approval request detail
+- [x] Approves a request with the provided [body] and [id]
+- [x] Rejects a request and returns the response
+- [x] Retrieves notification data and returns the response
+- [x] Retrieves the details of a notification based on its [id]
+- [x] Retrieves employee data based on name filtering parameters
+
+</details>
+
+<details><summary>Payroll Employee</summary>
+
+- [x] Retrieves a list of payrolls
+- [x] Retrieves the details of a payroll
+- [x] Retrieves a list of THR (holiday allowance) payrolls
+- [x] Retrieves the details of a THR (holiday allowance) payroll
 
 </details>
 
