@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:beetlehr_sdk/src/shared_preferences/shared_preferences.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 /// Error handling when error in interceptor about authentication
 class AuthHttpInterceptor extends InterceptorsWrapper {
@@ -33,21 +34,23 @@ class AuthHttpInterceptor extends InterceptorsWrapper {
 
     final deviceInfo = DeviceInfoPlugin();
 
-    if (Platform.isAndroid) {
-      final androidInfo = await deviceInfo.androidInfo;
-      deviceId = androidInfo.id;
-    } else if (Platform.isIOS) {
-      final iosInfo = await deviceInfo.iosInfo;
-      deviceId = iosInfo.utsname.version;
-    } else if (Platform.isWindows) {
-      final windowsInfo = await deviceInfo.windowsInfo;
-      deviceId = windowsInfo.deviceId;
-    } else if (Platform.isLinux) {
-      final linuxInfo = await deviceInfo.linuxInfo;
-      deviceId = linuxInfo.variantId;
-    } else if (Platform.isMacOS) {
-      final macosInfo = await deviceInfo.macOsInfo;
-      deviceId = macosInfo.systemGUID;
+    if (kIsWeb) {
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        deviceId = androidInfo.id;
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        deviceId = iosInfo.utsname.version;
+      } else if (Platform.isWindows) {
+        final windowsInfo = await deviceInfo.windowsInfo;
+        deviceId = windowsInfo.deviceId;
+      } else if (Platform.isLinux) {
+        final linuxInfo = await deviceInfo.linuxInfo;
+        deviceId = linuxInfo.variantId;
+      } else if (Platform.isMacOS) {
+        final macosInfo = await deviceInfo.macOsInfo;
+        deviceId = macosInfo.systemGUID;
+      }
     } else {
       final otherInfo = await deviceInfo.webBrowserInfo;
       deviceId =
