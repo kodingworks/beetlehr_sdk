@@ -23,3 +23,7 @@
 - feature employe notice & payroll
 - feature profile
 - token custom initialization
+
+## 1.0.1+1
+
+- fix minor bug for get platform device id
