@@ -34,7 +34,7 @@ class AuthHttpInterceptor extends InterceptorsWrapper {
 
     final deviceInfo = DeviceInfoPlugin();
 
-    if (kIsWeb) {
+    if (kIsWeb == false) {
       if (Platform.isAndroid) {
         final androidInfo = await deviceInfo.androidInfo;
         deviceId = androidInfo.id;
