@@ -39,6 +39,19 @@ class AuthHttpInterceptor extends InterceptorsWrapper {
     } else if (Platform.isIOS) {
       final iosInfo = await deviceInfo.iosInfo;
       deviceId = iosInfo.utsname.version;
+    } else if (Platform.isWindows) {
+      final windowsInfo = await deviceInfo.windowsInfo;
+      deviceId = windowsInfo.deviceId;
+    } else if (Platform.isLinux) {
+      final linuxInfo = await deviceInfo.linuxInfo;
+      deviceId = linuxInfo.variantId;
+    } else if (Platform.isMacOS) {
+      final macosInfo = await deviceInfo.macOsInfo;
+      deviceId = macosInfo.systemGUID;
+    } else {
+      final otherInfo = await deviceInfo.webBrowserInfo;
+      deviceId =
+          '${otherInfo.platform}-${otherInfo.browserName.name}-${otherInfo.userAgent ?? '-'}';
     }
 
     optionHeaders.putIfAbsent('user-device', () => deviceId!);
